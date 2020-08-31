@@ -8,4 +8,4 @@ htmlcov
 .coveralls.yml
 
 data
-manotes-api
+flaskboilerplate-api
