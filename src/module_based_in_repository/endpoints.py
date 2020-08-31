@@ -4,9 +4,9 @@ from src.module_based_in_repository.application_services import ItemsService
 
 class ItemsResource(ResourceBase):
 
-    def __init__(self, items_service: ItemsService):
+    def __init__(self, *args, **kwargs):
         super(ItemsResource, self).__init__()
-        self.__items_service = items_service
+        self.__items_service = kwargs['items_service']
 
     def get(self):
         try:

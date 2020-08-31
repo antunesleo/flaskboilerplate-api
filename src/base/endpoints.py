@@ -1,7 +1,7 @@
 import re
 from functools import wraps
 
-from flask_restful import Resource
+from flask_restx import Resource
 from flask import g, Response, request
 
 
