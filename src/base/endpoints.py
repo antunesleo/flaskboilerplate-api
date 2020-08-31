@@ -37,25 +37,8 @@ class ResourceBase(Resource):
         return {'result': 'error', 'error': 'Internal Server Error', 'exception': 'An unexpected error occurred'}, 500
 
     @staticmethod
-    def _return_ok(**extra):
-        result = {'result': 'OK'}
-        if extra is not None:
-            result.update(extra)
-        return result
-
-    @staticmethod
-    def _return_not_found(**extra):
-        result = {'result': 'not-found', 'error': 'Resource Not Found'}
-        if extra is not None:
-            result.update(extra)
-        return result, 404
-
-    @staticmethod
-    def _return_not_mine(**extra):
-        result = {'result': 'not-mine', 'error': 'Resource Not Mine'}
-        if extra is not None:
-            result.update(extra)
-        return result, 405
+    def _return_success_created():
+        return {'result': 'Created'}, 201
 
 
 def not_allowed(f):

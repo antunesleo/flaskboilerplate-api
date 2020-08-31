@@ -9,13 +9,18 @@ class ItemsResource(ResourceBase):
         self.__items_service = items_service
 
     def get(self):
-        items_dict = self.__items_service.list_items()
-        response = self._converter.snake_to_camel(items_dict)
-        return response, 200
+        try:
+            items_dict = self.__items_service.list_items()
+            return self._converter.snake_to_camel(items_dict), 200
+        except Exception:
+            return self._return_unexpected_error()
 
     def post(self):
-        self.__items_service.create_item({'id': 3, 'name': 'alkk ei'})
-        return self._converter.snake_to_camel({'result': 'Created'}), 201
+        try:
+            self.__items_service.create_item({'id': 3, 'name': 'alkk ei'})
+            return self._return_success_created()
+        except Exception:
+            return self._return_unexpected_error()
 
     @not_allowed
     def put(self):
