@@ -12,8 +12,8 @@ Modular based flask api boilerplate for Active Record and Repository patterns fl
     $ cp .env.sample .env
     $ cp .env.sample .env.test
     $ mkdir logs
-    $ python3.8 -m venv boilerplateflask-api
-    $ source boilerplateflask-api/bin/activate
+    $ python3.8 -m venv flaskboilerplate-api
+    $ source flaskboilerplate-api/bin/activate
     $ pip install -r requirements.txt
     $ pip install -r requirements_dev.txt
 
