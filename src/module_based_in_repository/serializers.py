@@ -15,7 +15,7 @@ class ItemSerializer(JSONSerializer, YAMLSerializer):
         else:
             converted_dict = self.converter.snake_to_camel(self.__item_to_dict(item))
 
-        return converted_dict
+        return json.dumps(converted_dict)
 
     def deserialize_json(self, string_json: str) -> dict:
         return self.converter.camel_to_snake(json.loads(string_json))
