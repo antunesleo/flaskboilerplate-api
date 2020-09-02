@@ -1,5 +1,6 @@
 """Generic serializers and converters that can be used for any component"""
 import re
+from abc import ABC, abstractmethod
 from typing import Callable
 
 
@@ -32,3 +33,25 @@ class CaseStyleConverter(object):
 
     def snake_to_camel(self, data_dict: dict) -> dict:
         return self.__transform_key(data_dict, self.__snake_to_camel)
+
+
+class JSONSerializer(ABC):
+
+    @abstractmethod
+    def serialize_json(self, object: object, many=False) -> str:
+        raise NotImplementedError
+
+    @abstractmethod
+    def deserialize_json(self, string_json: str) -> dict:
+        raise NotImplementedError
+
+
+class YAMLSerializer(ABC):
+
+    @abstractmethod
+    def serialize_yaml(self, object: object, many=False) -> str:
+        raise NotImplementedError
+
+    @abstractmethod
+    def deserialize_yaml(self, string_yaml: str) -> dict:
+        raise NotImplementedError

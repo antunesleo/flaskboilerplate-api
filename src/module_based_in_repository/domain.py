@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from typing import List
 
 from src.base.domain import AggregateRoot
 
@@ -21,7 +22,7 @@ class Item(AggregateRoot):
 class ItemRepository(ABC):
 
     @abstractmethod
-    def list(self, for_read=True) -> Item:
+    def list(self, for_read=True) -> List[Item]:
         raise NotImplementedError
 
     @abstractmethod

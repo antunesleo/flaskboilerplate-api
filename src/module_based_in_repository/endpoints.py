@@ -1,5 +1,5 @@
 from src.base.endpoints import ResourceBase, not_allowed
-from src.module_based_in_repository.application_services import ItemsService
+from src.module_based_in_repository.serializers import ItemSerializer
 
 
 class ItemsResource(ResourceBase):
@@ -7,11 +7,12 @@ class ItemsResource(ResourceBase):
     def __init__(self, *args, **kwargs):
         super(ItemsResource, self).__init__()
         self.__items_service = kwargs['items_service']
+        self.__serializer = ItemSerializer()
 
     def get(self):
         try:
-            items_dict = self.__items_service.list_items()
-            return self._converter.snake_to_camel(items_dict), 200
+            items = self.__items_service.list_items()
+            return self.__serializer.serialize_yaml(items, many=True), 200
         except Exception:
             return self._return_unexpected_error()
 
