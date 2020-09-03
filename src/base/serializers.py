@@ -1,7 +1,11 @@
 """Generic serializers and converters that can be used for any component"""
+import json
 import re
 from abc import ABC, abstractmethod
 from typing import Callable
+
+import yaml
+from rest_framework.serializers import Serializer
 
 
 class CaseStyleConverter(object):
@@ -55,3 +59,26 @@ class YAMLSerializer(ABC):
     @abstractmethod
     def deserialize_yaml(self, string_yaml: str) -> dict:
         raise NotImplementedError
+
+
+class GenericSerializer(JSONSerializer, YAMLSerializer):
+    converter = CaseStyleConverter()
+
+    def __init__(self, middleware_serializer_class: Serializer):
+        self.__middleware_serializer_class = middleware_serializer_class
+
+    def serialize_json(self, object: object, many=False) -> str:
+        serializer = self.__middleware_serializer_class(object, many=many)
+        return json.dumps(serializer.data)
+
+    def deserialize_json(self, string_json: str) -> dict:
+        pass
+
+    def serialize_yaml(self, object: object, many=False) -> str:
+        serializer = self.__middleware_serializer_class(object, many=many)
+        if many:
+            return yaml.dump([dict(item) for item in serializer.data])
+        return yaml.dump(serializer.data)
+
+    def deserialize_yaml(self, string_yaml: str) -> dict:
+        pass

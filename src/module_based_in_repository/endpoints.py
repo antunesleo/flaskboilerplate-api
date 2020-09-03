@@ -1,7 +1,8 @@
 from flask import Response
 
 from src.base.endpoints import ResourceBase, not_allowed
-from src.module_based_in_repository.serializers import ItemSerializer
+from src.base.serializers import GenericSerializer
+from src.module_based_in_repository.serializers import ItemMiddlewareSerializer
 
 
 class ItemsResource(ResourceBase):
@@ -9,13 +10,13 @@ class ItemsResource(ResourceBase):
     def __init__(self, *args, **kwargs):
         super(ItemsResource, self).__init__()
         self.__items_service = kwargs['items_service']
-        self.__serializer = ItemSerializer()
+        self.__serializer = GenericSerializer(ItemMiddlewareSerializer)
 
     def get(self):
         try:
             items = self.__items_service.list_items()
             serialized_items = self.__serializer.serialize_yaml(items, many=True)
-            return Response(serialized_items, mimetype='text/yaml')
+            return Response(serialized_items, mimetype='text/json')
         except Exception:
             return self._return_unexpected_error()
 
