@@ -1,4 +1,8 @@
+from src.web_app import get_api
 from src.base.endpoints import ResourceBase, not_allowed
+
+
+api = get_api()
 
 
 class Module2ItemsResource(ResourceBase):
@@ -20,5 +24,5 @@ class Module2ItemsResource(ResourceBase):
         pass
 
 
-def register(api):
+def register():
     api.add_resource(Module2ItemsResource, '/api/module_based_in_activerecord-items')

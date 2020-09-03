@@ -1,24 +1,30 @@
-from flask import Response
+from flask_restx import fields, marshal
+
+from src.web_app import get_api
 
 from src.base.endpoints import ResourceBase, not_allowed
-from src.base.serializers import GenericSerializer
-from src.module_based_in_repository.serializers import ItemMiddlewareSerializer
+from src.module_based_in_repository import serializers
 
 
+api = get_api()
+
+
+@api.doc()
 class ItemsResource(ResourceBase):
 
     def __init__(self, *args, **kwargs):
-        super(ItemsResource, self).__init__()
+        super(ItemsResource, self).__init__(*args, **kwargs)
         self.__items_service = kwargs['items_service']
-        self.__serializer = GenericSerializer(ItemMiddlewareSerializer)
 
+    @api.marshal_with(serializers.items_serializer, as_list=True)
+    @api.doc(responses={500: 'Sorry dude, its my fault', 400: 'Dude, what are you saying?'})
     def get(self):
         try:
             items = self.__items_service.list_items()
-            serialized_items = self.__serializer.serialize_yaml(items, many=True)
-            return Response(serialized_items, mimetype='text/json')
+            return items
         except Exception:
-            return self._return_unexpected_error()
+            api.abort(400, 'My custom message', custom='value')
+
 
     def post(self):
         try:
@@ -36,5 +42,5 @@ class ItemsResource(ResourceBase):
         pass
 
 
-def register(api, items_service):
+def register(items_service):
     api.add_resource(ItemsResource, '/api/items', resource_class_kwargs={'items_service': items_service})

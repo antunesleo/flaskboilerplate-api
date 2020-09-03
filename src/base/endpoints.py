@@ -2,17 +2,13 @@ import re
 from functools import wraps
 
 from flask_restx import Resource
-from flask import g, Response, request
-
-
-from src.base.serializers import CaseStyleConverter
+from flask import Response, request
 
 
 class ResourceBase(Resource):
 
-    def __init__(self):
-        super(ResourceBase, self).__init__()
-        self._converter = CaseStyleConverter()
+    def __init__(self,  *args, **kwargs):
+        super(ResourceBase, self).__init__( *args, **kwargs)
 
     def _get_payload(self):
         payload = {}

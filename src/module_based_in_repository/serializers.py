@@ -1,6 +1,13 @@
-from rest_framework.serializers import Serializer, IntegerField, CharField
+from flask_restx import fields
+
+from src.web_app import get_api
 
 
-class ItemMiddlewareSerializer(Serializer):
-    id = IntegerField()
-    name = CharField(max_length=200)
+api = get_api()
+
+
+items_serializer = api.model('Item', {
+    'id': fields.Integer,
+    'name': fields.String,
+    'fullInfo': fields.String(attribute='full_info')
+})

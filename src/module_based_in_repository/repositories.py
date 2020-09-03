@@ -7,8 +7,8 @@ class InMemoryItemRepository(ItemRepository):
 
     def __init__(self):
         self.__items = [
-            Item(1, 'kdao wrgf'),
-            Item(2, 'hdasu kqp')
+            Item(1, 'kdao wrgf', 'kfposakopfskpod'),
+            Item(2, 'hdasu kqp', 'fdfsakfkpaosfko')
         ]
 
     def add(self, item: Item) -> None:
