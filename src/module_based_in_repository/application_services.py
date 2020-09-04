@@ -8,10 +8,9 @@ class ItemsService(ApplicationService):
     def __init__(self, repository: ItemRepository):
         self.__repository = repository
 
-    def create_item(self, item_dict: dict) -> None:
-        item = Item(**item_dict)
+    def create_item(self, item_creation_command: dict) -> None:
+        item = Item(**item_creation_command)
         self.__repository.add(item)
 
     def list_items(self) -> List[Item]:
         return self.__repository.list()
-

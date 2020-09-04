@@ -6,7 +6,7 @@ from src.base.domain import AggregateRoot
 
 class Item(AggregateRoot):
 
-    def __init__(self, id: int, name: str, full_info: str):
+    def __init__(self, name: str, full_info: str, id: int=None):
         self.__id = id
         self.__name = name
         self.__full_info = full_info

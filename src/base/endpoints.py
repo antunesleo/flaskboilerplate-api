@@ -10,20 +10,6 @@ class ResourceBase(Resource):
     def __init__(self,  *args, **kwargs):
         super(ResourceBase, self).__init__( *args, **kwargs)
 
-    def _get_payload(self):
-        payload = {}
-        if request.json:
-            payload.update(self._converter.camel_to_snake(request.json))
-        if request.form:
-            payload.update(self._converter.camel_to_snake(request.form))
-        return payload
-
-    def _get_query_string(self):
-        query_string = {}
-        if request.args:
-            query_string.update(self._converter.camel_to_snake(request.args))
-        return query_string
-
     @staticmethod
     def _get_files():
         return request.files
