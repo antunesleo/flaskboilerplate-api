@@ -9,8 +9,9 @@ class ItemsService(ApplicationService):
         self.__repository = repository
 
     def create_item(self, item_creation_command: dict) -> None:
-        item = Item(**item_creation_command)
-        self.__repository.add(item)
+        if item_creation_command.pop('should_do_something'):
+            item = Item(**item_creation_command)
+            self.__repository.add(item)
 
     def list_items(self) -> List[Item]:
         return self.__repository.list()

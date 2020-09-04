@@ -13,5 +13,6 @@ item_model = api.model('Item', {
 })
 
 item_creation_parser = reqparse.RequestParser()
-item_creation_parser.add_argument('name', type=str, required=True)
-item_creation_parser.add_argument('fullInfo', type=str, dest='full_info', required=True)
+item_creation_parser.add_argument('name', type=str, required=True, location='json')
+item_creation_parser.add_argument('fullInfo', type=str, dest='full_info', required=True, location='json')
+item_creation_parser.add_argument('shouldDoSomething', dest='should_do_something', type=bool, required=True)
